@@ -1,0 +1,50 @@
+<body>
+  <canvas id="myCanvas" width="600" height="400"></canvas>
+  <div>
+    <input type="radio" id="colorGray" name="color" value="gray" checked>
+    <label for="colorGray">Gris</label>
+    <input type="radio" id="colorRed" name="color" value="red">
+    <label for="colorRed">Rouge</label>
+    <input type="radio" id="colorGreen" name="color" value="green">
+    <label for="colorGreen">Vert</label>
+    <input type="radio" id="colorBlue" name="color" value="blue">
+    <label for="colorBlue">Bleu</label>
+  </div>
+  <script>
+   // Initialisation des variables
+var canvas = document.getElementById("myCanvas");
+var context = canvas.getContext("2d");
+var blockWidth = 30;
+var blockHeight = 30;
+var blocks = [];
+var currentColor = "gray"; // Couleur par défaut
+
+// Fonction pour dessiner un bloc avec une couleur donnée
+function drawBlock(x, y, color) {
+  context.fillStyle = color;
+  context.fillRect(x, y, blockWidth, blockHeight);
+}
+
+// Fonction pour placer un bloc
+function placeBlock(event) {
+  var x = event.clientX - canvas.offsetLeft;
+  var y = event.clientY - canvas.offsetTop;
+  var blockX = Math.floor(x / blockWidth) * blockWidth;
+  var blockY = Math.floor(y / blockHeight) * blockHeight;
+  blocks.push({x: blockX, y: blockY, color: currentColor});
+  drawBlock(blockX, blockY, currentColor);
+}
+
+// Ajout de l'événement pour placer un bloc au clic
+canvas.addEventListener("click", placeBlock);
+
+// Sélection de la couleur à l'aide d'un bouton radio
+var colorInputs = document.getElementsByName("color");
+for (var i = 0; i < colorInputs.length; i++) {
+  colorInputs[i].addEventListener("change", function() {
+    currentColor = this.value;
+  });
+}
+
+  </script>
+</body>
